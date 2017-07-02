@@ -18,7 +18,7 @@ apply plugin: 'application'
 
 
 sourceCompatibility = 1.8
-ext.junitJupiterVersion  = '5.0.0-M3'
+ext.junitJupiterVersion = '5.0.0-M3' //todo upgrade version
 
 compileJava {
     options.compilerArgs << '-parameters'
