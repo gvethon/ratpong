@@ -2,8 +2,6 @@ package pl.setblack.pongi;
 
 import javaslang.Function1;
 import javaslang.control.Try;
-import pl.setblack.pongi.games.GamesService;
-import pl.setblack.pongi.scores.ScoresService;
 import pl.setblack.pongi.users.UsersService;
 import ratpack.func.Action;
 import ratpack.handling.Chain;
@@ -18,15 +16,11 @@ import java.nio.file.Paths;
 public class Server {
 
     private final UsersService usersService;
-    private final GamesService gamesService;
-    private final ScoresService scoresService;
 
     private final RatpackServer ratpackServer;
 
-    public Server(UsersService usersService, GamesService gamesService, ScoresService scoresService) {
+    public Server(UsersService usersService) {
         this.usersService = usersService;
-        this.gamesService = gamesService;
-        this.scoresService = scoresService;
         ratpackServer =
                 Try.of(() -> createDefaultServer(
                         defineApi()))
@@ -80,9 +74,7 @@ public class Server {
 
     private Action<Chain> defineApi() {
         return apiChain -> apiChain
-                .insert(usersService.usersApi())
-                .insert(gamesService.gamesApi())
-                .prefix("score", scoresService.scores());
+                .insert(usersService.usersApi());
     }
 
     private static RatpackServerSpec createEmptyServer(RatpackServerSpec initial)
